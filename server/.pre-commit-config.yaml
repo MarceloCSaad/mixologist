@@ -1,0 +1,18 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 24.4.2  # Use the latest stable version or pin as needed
+    hooks:
+      - id: black
+        language_version: python3
+        args: [--line-length=88]  # update to match flake8 config
+        pass_filenames: true
+        stages: [commit]
+        additional_dependencies: []
+        require_serial: true
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.0.0  # Use the latest stable version or pin as needed
+    hooks:
+      - id: flake8
+        additional_dependencies: []
+        args: [--max-line-length=88]

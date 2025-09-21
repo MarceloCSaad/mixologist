@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker, Session
 from src.database.constants import POSTGRESQL__PSYCOPG2__DB_URI as pg_uri
 
 
-class DBModel():
+class DBModel:
     def __init__(self) -> None:
         self.engine = self._get_pg_engine_from_settings()
         super().__init__()
@@ -34,6 +34,7 @@ class PGDatabaseService(DBModel):
 
     def create_tables(self) -> None:
         from src.models.base_model import BaseModel
+
         """
         Create all tables in the database.
         """

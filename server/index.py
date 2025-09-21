@@ -17,7 +17,9 @@ with db_service.get_session() as session:
 
     # Create ingredients
     ingredient_service = IngredientService()
-    cachaca = ingredient_service.get_or_create_ingredient(name="Cachaça", session=session)
+    cachaca = ingredient_service.get_or_create_ingredient(
+        name="Cachaça", session=session
+    )
     lime = ingredient_service.get_or_create_ingredient(name="Lime", session=session)
     sugar = ingredient_service.get_or_create_ingredient(name="Sugar", session=session)
     ice = ingredient_service.get_or_create_ingredient(name="Ice", session=session)
@@ -25,11 +27,26 @@ with db_service.get_session() as session:
 
     # Build steps for the recipe
     steps = [
-        Step(action=StepAction.ADD_INGREDIENT, ingredient=lime, measuring_unit=MeasuringUnit.PIECE, quantity=8),
+        Step(
+            action=StepAction.ADD_INGREDIENT,
+            ingredient=lime,
+            measuring_unit=MeasuringUnit.PIECE,
+            quantity=8,
+        ),
         Step(action=StepAction.MUDDLE, ingredient=lime),
-        Step(action=StepAction.ADD_INGREDIENT, ingredient=sugar, measuring_unit=MeasuringUnit.GRAM, quantity=20),
+        Step(
+            action=StepAction.ADD_INGREDIENT,
+            ingredient=sugar,
+            measuring_unit=MeasuringUnit.GRAM,
+            quantity=20,
+        ),
         Step(action=StepAction.ADD_INGREDIENT, ingredient=ice, quantity=5),
-        Step(action=StepAction.ADD_INGREDIENT, ingredient=cachaca, measuring_unit=MeasuringUnit.ML, quantity=80),
+        Step(
+            action=StepAction.ADD_INGREDIENT,
+            ingredient=cachaca,
+            measuring_unit=MeasuringUnit.ML,
+            quantity=80,
+        ),
     ]
 
     # Create cocktail and associate steps and tags
@@ -40,14 +57,16 @@ with db_service.get_session() as session:
         description="Brazillian popular drink",
         tags=list_of_tags,
         steps=steps,
-        validate=True
+        validate=True,
     )
 
-    session.add_all([
-        cocktail,
-        *list_of_tags,
-        *list_of_ingredients,
-    ])
+    session.add_all(
+        [
+            cocktail,
+            *list_of_tags,
+            *list_of_ingredients,
+        ]
+    )
     session.commit()
     session.refresh(cocktail)
     print(f"Created cocktail: {cocktail}")

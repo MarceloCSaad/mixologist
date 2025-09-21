@@ -13,20 +13,25 @@ from alembic import context
 from src.database.constants import POSTGRESQL__PSYCOPG2__DB_URI
 from src.models.base_model import BaseModel
 
+
 def import_all_models():
     """
     Dynamically import all modules in the src.models package and its subpackages.
     Ensures all SQLAlchemy models are registered with the Base metadata for Alembic.
     """
     # Get the project root (assumes this file is in server/src/database/alembic/)
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../..'))
-    models_path = os.path.join(project_root, 'src', 'models')
-    package_name = 'src.models'
+    project_root = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "../../../..")
+    )
+    models_path = os.path.join(project_root, "src", "models")
+    package_name = "src.models"
 
     if project_root not in sys.path:
         sys.path.append(project_root)
 
-    for _importer, modname, _ispkg in pkgutil.walk_packages([models_path], prefix=package_name + "."):
+    for _importer, modname, _ispkg in pkgutil.walk_packages(
+        [models_path], prefix=package_name + "."
+    ):
         importlib.import_module(modname)
 
 
@@ -42,7 +47,7 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# Override the sqlalchemy.url setting in the .ini file with the one from environment variables
+# Override the sqlalchemy.url .ini with .env.development created setting variable
 config.set_main_option("sqlalchemy.url", POSTGRESQL__PSYCOPG2__DB_URI)
 
 # add your model's MetaData object here
@@ -98,9 +103,7 @@ def run_migrations_online() -> None:
     )
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        context.configure(connection=connection, target_metadata=target_metadata)
 
         with context.begin_transaction():
             context.run_migrations()

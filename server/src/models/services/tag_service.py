@@ -10,24 +10,33 @@ class TagService(PGDatabaseService):
     """
     Service to manage Tag-related database operations.
     """
+
     def __init__(self):
         super().__init__()
 
-    def _get_filter_conditions(self, id: Optional[int], name: Optional[str]) -> List[Any]:
+    def _get_filter_conditions(
+        self, id: Optional[int], name: Optional[str]
+    ) -> List[Any]:
         filter_conditions = []
         filter_conditions.append(Tag.id == id) if id else None
         filter_conditions.append(Tag.name == name) if name else None
         return filter_conditions
 
     @with_upper_scope_session
-    def fetch_tags(self, id: Optional[int], name: Optional[str], session: Session = None) -> List[Tag]:
+    def fetch_tags(
+        self, id: Optional[int], name: Optional[str], session: Session = None
+    ) -> List[Tag]:
         """
         Fetches tags from the database based on optional filters: id and name.
         If no filters are provided, all tags are returned.
         """
         if not id and not name:
             return session.query(Tag).all()
-        tags = session.query(Tag).filter(*self._get_filter_conditions(id=id, name=name)).all()
+        tags = (
+            session.query(Tag)
+            .filter(*self._get_filter_conditions(id=id, name=name))
+            .all()
+        )
         return tags
 
     @with_upper_scope_session
@@ -36,7 +45,7 @@ class TagService(PGDatabaseService):
         Fetches a single tag by its ID.
         """
         return session.query(Tag).filter(Tag.id == id).first()
-    
+
     @with_upper_scope_session
     def fetch_tag_by_name(self, name: str, session: Session = None) -> Optional[Tag]:
         """

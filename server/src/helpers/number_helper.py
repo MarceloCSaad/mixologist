@@ -16,16 +16,22 @@ def pluralize_word(word: str) -> str:
 
 def quantity_to_normalized_string(quantity: Optional[int] = None) -> str:
     """
-    Returns a human-readable string for the quantity, removing unnecessary trailing zeros.
+    Returns a human-readable string for the quantity without trailing zeros
     """
     if quantity is None:
         return None
     normalized_quantity = Decimal(quantity).normalize()
-    quantity_str = format(normalized_quantity, 'f').rstrip('0').rstrip('.') if '.' in format(normalized_quantity, 'f') else format(normalized_quantity, 'f')
+    quantity_str = (
+        format(normalized_quantity, "f").rstrip("0").rstrip(".")
+        if "." in format(normalized_quantity, "f")
+        else format(normalized_quantity, "f")
+    )
     return quantity_str
 
 
-def measured_quantity_to_pluralized_string(measuring_unit: Optional[MeasuringUnit] = None, quantity: Optional[float] = None) -> Optional[str]:
+def measured_quantity_to_pluralized_string(
+    measuring_unit: Optional[MeasuringUnit] = None, quantity: Optional[float] = None
+) -> Optional[str]:
     """
     Converts a measuring quantity enum value to a human-readable string.
     """
@@ -40,17 +46,21 @@ def measured_quantity_to_pluralized_string(measuring_unit: Optional[MeasuringUni
     return f"{normalized_quantity} {measuring_unit.value}"
 
 
-def measured_ingredient_to_pluralized_string(ingredient_name: str, measuring_unit: Optional[MeasuringUnit] = None, quantity: Optional[float] = None) -> Optional[str]:
+def measured_ingredient_to_pluralized_string(
+    ingredient_name: str,
+    measuring_unit: Optional[MeasuringUnit] = None,
+    quantity: Optional[float] = None,
+) -> Optional[str]:
     """
     Converts a measured ingredient to a human-readable string.
 
-    Examples inputs:
+    Example inputs:
         ingredient_name="angostura", measuring_unit=MeasuringUnit.DASH, quantity=1
         ingredient_name="ice", measuring_unit=MeasuringUnit.CUBE, quantity=2
         ingredient_name="vodka", measuring_unit=MeasuringUnit.OZ, quantity=3.5
         ingredient_name="vodka", measuring_unit=None, quantity=None
 
-    Examples outputs (respectively):
+    Example outputs (respectively):
         "1 dash of angostura"
         "2 cubes of ice"
         "3.5 oz of vodka"
@@ -58,11 +68,20 @@ def measured_ingredient_to_pluralized_string(ingredient_name: str, measuring_uni
     """
     if not ingredient_name:
         return None
-    
+
     if not measuring_unit and quantity is not None and quantity != 1:
         ingredient_name = pluralize_word(ingredient_name)
 
-    pluralized_measured_quantity = measured_quantity_to_pluralized_string(measuring_unit=measuring_unit, quantity=quantity)
-    if pluralized_measured_quantity:
-        return f"{pluralized_measured_quantity}{" of " if measuring_unit else " "}{ingredient_name}"
-    return ingredient_name
+    pluralized_measured_quantity = measured_quantity_to_pluralized_string(
+        measuring_unit=measuring_unit, quantity=quantity
+    )
+    if not pluralized_measured_quantity:
+        return ingredient_name
+
+    return "".join(
+        [
+            pluralized_measured_quantity,
+            " of " if measuring_unit else " ",
+            ingredient_name,
+        ]
+    )

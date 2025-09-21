@@ -12,6 +12,7 @@ class StepAction(Enum):
     GRATE = "grate"
     DECORATE = "decorate"
 
+
 ActionToHumanReadableMapper = {
     StepAction.ADD_INGREDIENT: "add :ingredient",
     StepAction.MUDDLE: "muddle the :ingredient",
@@ -23,6 +24,7 @@ ActionToHumanReadableMapper = {
     StepAction.GRATE: "grate the :object",
     StepAction.DECORATE: "decorate with :object",
 }
+
 
 class CocktailGlassware(Enum):
     MARGARITA = "margarita_glass"
@@ -49,6 +51,7 @@ class CocktailGlassware(Enum):
     GLENCAIRN = "glencairn_glass"
     JULEP = "julep"
 
+
 class MeasuringUnit(Enum):
     ML = "ml"
     OZ = "oz"
@@ -70,6 +73,7 @@ class MeasuringUnit(Enum):
     LEAF = "leaf"
     PINCH = "pinch"
 
+
 PLURALIZABLE_MEASURING_UNITS = [
     MeasuringUnit.DASH,
     MeasuringUnit.TSP,
@@ -87,6 +91,7 @@ PLURALIZABLE_MEASURING_UNITS = [
     MeasuringUnit.LEAF,
     MeasuringUnit.PINCH,
 ]
+
 
 class MixologyTool(Enum):
     COCKTAIL_SHAKER = "cocktail_shaker"
