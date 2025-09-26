@@ -21,7 +21,7 @@ const Page = ({
     ...rest
 }: PageProps) => {
     return (
-        <div className="page dark" {...rest}>
+        <div className="page" {...rest}>
             {withNav && <GlobalNav className="global-nav" />}
             {header ? header : title && <PageHeader title={title} />}
             {children}

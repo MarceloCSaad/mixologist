@@ -16,9 +16,21 @@ const App = () => {
                             'https://assets.epicurious.com/photos/579a2d8e437fcffe02f7230b/16:9/w_1920,c_limit/caipirinha-072816.jpg'
                         }
                         tags={['cachaça', 'lime', 'sugar', 'refreshing']}
-                    />{' '}
+                    />
                 </Page.session>
-                <Page.session light>
+                <Page.session contrastStyle="inverted">
+                    <CocktailPresentation
+                        name={'Caipirinha'}
+                        description={
+                            'A refreshing Brazilian cocktail made with cachaça, sugar, and lime.'
+                        }
+                        imageUrl={
+                            'https://assets.epicurious.com/photos/579a2d8e437fcffe02f7230b/16:9/w_1920,c_limit/caipirinha-072816.jpg'
+                        }
+                        tags={['cachaça', 'lime', 'sugar', 'refreshing']}
+                    />
+                </Page.session>
+                <Page.session contrastStyle="inverted">
                     <IngredientList
                         ingredients={[
                             { id: '1', name: 'Cachaça', amount: '50ml' },
@@ -27,7 +39,7 @@ const App = () => {
                         ]}
                     />
                 </Page.session>
-                <Page.session light>
+                {/* <Page.session contrastStyle="inverted">
                     Lorem ipsum dolor sit amet consectetur, adipisicing elit. Id
                     sapiente voluptatibus quod ratione doloribus molestiae,
                     dolor blanditiis neque similique ut totam harum veniam esse
@@ -40,7 +52,7 @@ const App = () => {
                         molestiae, dolor blanditiis neque similique ut totam
                         harum veniam esse ex, fuga, numquam fugiat corrupti at?
                     </p>
-                </Page.session>
+                </Page.session> */}
             </Page.content>
             <Page.footer className="footer">A footer</Page.footer>
         </Page>
@@ -48,3 +60,10 @@ const App = () => {
 };
 
 export default App;
+
+{
+    /* <span class="shadow-gray-350 mr-2 mb-0 inline-block cursor-default rounded-full px-2.5 py-1 pb-1.5 text-sm leading-3 font-semibold shadow-md bg-[var(--color-contrast-muted)] text-[var(--color-main)] border-[var(--color-main)] hover:bg-[var(--color-main)] hover:text-[var(--color-contrast)] border-0"><div>refreshing</div></span> */
+}
+{
+    /* <span class="shadow-gray-350 mr-2 mb-0 inline-block cursor-default rounded-full px-2.5 py-1 pb-1.5 text-sm leading-3 font-semibold shadow-md bg-[var(--color-main-muted)] text-[var(--color-contrast)] border-[var(--color-contrast)] hover:bg-[var(--color-contrast)] hover:text-[var(--color-main)] border-0"><div>refreshing</div></span> */
+}

@@ -1,39 +1,74 @@
+import React, { useMemo } from 'react';
+import { PageSessionContext } from './PageSessionContext';
+import { PALETTE } from '../palette';
+
 const paddingMap = {
     none: '0',
     xxs: '1',
     xs: '2',
-    s: '4',
-    m: '8',
-    l: '16',
+    sm: '4',
+    md: '8',
+    lg: '16',
     xl: '40',
     xxl: '80',
 };
 
 export interface PageSessionProps extends React.HTMLAttributes<HTMLDivElement> {
-    light?: boolean;
     children?: React.ReactNode;
     innerPadding?: keyof typeof paddingMap | number;
+    contrastStyle?: 'default' | 'inverted';
 }
 
-const PageSession = (props: PageSessionProps) => {
-    const { className = '', light = false, innerPadding, ...rest } = props;
+export interface PageSessionContentProps {
+    children?: React.ReactNode;
+}
+
+export const PageSessionContent = ({ children }: PageSessionContentProps) => {
+    const { innerPadding } = React.useContext(PageSessionContext);
     let paddingClass = 'p-md';
     if (typeof innerPadding === 'number') {
         paddingClass = `p-${innerPadding}`;
-    } else if (innerPadding && innerPadding in paddingMap) {
+    } else if (innerPadding) {
         paddingClass = `p-${paddingMap[innerPadding]}`;
     }
 
     return (
         <div
-            className={`session ${light ? 'light' : 'dark'} ${className}`}
-            {...rest}
+            className={`${paddingClass} mx-auto w-full max-w-[var(--max-content-width)]`}
         >
-            <div className={`session-inner ${paddingClass}`}>
-                {props.children}
-            </div>
+            {children}
         </div>
     );
 };
+
+const PageSession = ({
+    className = '',
+    innerPadding = 'md',
+    children,
+    contrastStyle = 'default',
+    ...rest
+}: PageSessionProps) => {
+    const contextValue = useMemo(
+        () => ({
+            palette: PALETTE[contrastStyle] || PALETTE.default,
+            contrastStyle,
+            innerPadding,
+        }),
+        [contrastStyle, innerPadding],
+    );
+
+    return (
+        <PageSessionContext.Provider value={contextValue}>
+            <div
+                className={`session bg-[var(${contextValue.palette.main})] text-[var(${contextValue.palette.contrast})] ${className}`}
+                {...rest}
+            >
+                <PageSessionContent>{children}</PageSessionContent>
+            </div>
+        </PageSessionContext.Provider>
+    );
+};
+
+PageSession.Content = PageSessionContent;
 
 export default PageSession;

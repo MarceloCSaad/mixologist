@@ -1,4 +1,5 @@
 import React from 'react';
+import { usePageSession } from './Page/PageSessionContext';
 
 export interface Ingredient {
     id: string;
@@ -12,6 +13,7 @@ interface IngredientListProps {
 }
 
 const IngredientList: React.FC<IngredientListProps> = ({ ingredients }) => {
+    const { palette } = usePageSession();
     return (
         <section className="ingredient-list">
             <h2 className="ingredient-list__title">Ingredients</h2>
@@ -27,7 +29,10 @@ const IngredientList: React.FC<IngredientListProps> = ({ ingredients }) => {
                         <span className="ingredient-list__name font-medium">
                             {ingredient.name}
                         </span>
-                        <span className="ingredient-list__amount text-muted ml-auto">
+                        <span
+                            className="ingredient-list__amount ml-auto"
+                            style={{ color: palette.contrastMuted }}
+                        >
                             {ingredient.amount}
                         </span>
                     </li>

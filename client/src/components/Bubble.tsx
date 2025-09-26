@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { usePageSession } from './Page/PageSessionContext';
 
 interface BubbleProps {
     label: string;
     className?: string;
-    variant?: 'default' | 'muted' | 'highlight';
+    variant?: 'default' | 'highlight';
     withBorder?: boolean;
 }
 
@@ -11,20 +12,36 @@ const Bubble: React.FC<BubbleProps> = ({
     label,
     className = '',
     variant = 'default',
-    withBorder = true,
+    withBorder = false,
 }) => {
-    const variantStyles = {
-        default:
-            'bg-[var(--color-main-muted)] text-[var(--color-text)] border-[var(--color-text)] hover:bg-[var(--color-text)] hover:text-[var(--color-main)]',
-        muted: 'bg-[var(--color-main-muted)] text-[var(--color-muted-text)] border-[var(--color-muted)] hover:bg-[var(--color-muted-text)] hover:text-[var(--color-main)]',
-        highlight:
-            'bg-[var(--color-details)] text-[var(--color-text)] border-[var(--color-text)] hover:bg-[var(--color-text)] hover:text-[var(--color-main)]',
-    };
-    className += ' ' + (variantStyles[variant] || variantStyles['default']);
-    className += withBorder ? ' border' : ' border-0';
+    const { palette } = usePageSession();
+    const { main, mainMuted, contrast, details } = palette;
+
+    const tailwindClass = useMemo(() => {
+        const styleMapper = {
+            default: `bg-[var(${mainMuted})] text-[var(${contrast})] border-[var(${contrast})] hover:bg-[var(${contrast})] hover:text-[var(${main})]`,
+            highlight: `bg-[var(${details})] text-[var(${contrast})] border-[var(${contrast})] hover:bg-[var(${contrast})] hover:text-[var(${main})]`,
+        };
+        let bubbleClass =
+            className + ' ' + (styleMapper[variant] || styleMapper['default']);
+        bubbleClass += withBorder ? ' border' : ' border-0';
+
+        console.log('Palette in Bubble:', palette);
+        return bubbleClass.trim();
+    }, [
+        mainMuted,
+        contrast,
+        main,
+        details,
+        className,
+        variant,
+        withBorder,
+        palette,
+    ]);
+
     return (
         <span
-            className={`mr-2 mb-0 inline-block cursor-default rounded-full px-3 py-1 pb-1.5 text-sm leading-3 font-semibold shadow-md ${className}`}
+            className={`shadow-gray-350 mr-2 mb-0 inline-block cursor-default rounded-full px-2.5 py-1 pb-1.5 text-sm leading-3 font-semibold shadow-md ${tailwindClass}`}
         >
             <div>{label}</div>
         </span>

@@ -1,5 +1,6 @@
 import React from 'react';
 import Bubble from './Bubble';
+import { usePageSession } from './Page/PageSessionContext';
 
 interface CocktailPresentationProps {
     name: string;
@@ -14,6 +15,7 @@ const CocktailPresentation: React.FC<CocktailPresentationProps> = ({
     imageUrl,
     tags,
 }) => {
+    const { palette } = usePageSession();
     return (
         <div className="cocktail-presentation session-content flex w-full flex-row">
             <div className="cocktail-image flex-shrink-0">
@@ -32,8 +34,13 @@ const CocktailPresentation: React.FC<CocktailPresentationProps> = ({
                         ))}
                     </div>
                 )}
-                <hr className="my-2 mb-4 w-1/3 border-gray-400" />
-                <p className="muted text-gray-200">{description}</p>
+                <hr
+                    className="my-2 mb-4 w-1/3"
+                    style={{ borderColor: palette.contrastMuted }}
+                />
+                <p className="muted" style={{ color: palette.contrastMuted }}>
+                    {description}
+                </p>
             </div>
         </div>
     );

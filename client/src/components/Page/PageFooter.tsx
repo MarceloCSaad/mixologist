@@ -12,7 +12,9 @@ const PageFooter = (props: PageFooterProps) => {
             style={style}
             {...rest}
         >
-            <div className="inner">{props.children}</div>
+            <div className="inner mx-auto flex w-full max-w-[var(--max-content-width)] items-center justify-center px-12 pt-8 pb-4">
+                {props.children}
+            </div>
         </footer>
     );
 };

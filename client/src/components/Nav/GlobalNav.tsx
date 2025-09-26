@@ -15,7 +15,7 @@ const GlobalNav = (props: GlobalNavProps) => {
             {...props}
             className={`global-nav ${props.className || ''}`.trim()}
         >
-            <div className="inner">
+            <div className="inner px-8 py-3">
                 <div className="logo">Mixologist</div>
                 <div className="links flex flex-1 items-center justify-evenly">
                     <Button

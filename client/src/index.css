@@ -1,17 +1,13 @@
 @import 'tailwindcss';
 
-:root {
-    --max-content-width: 1000px;
-}
-
 :root[data-theme='dark'] {
     --color-main: hsl(0, 0%, 5%);
     --color-main-muted: hsl(0, 0%, 20%);
     --color-details: hsl(0, 75%, 50%);
     --color-alert: hsl(0, 75%, 50%);
     --color-highlight: hsl(0, 75%, 50%);
-    --color-text: hsl(0, 0%, 95%);
-    --color-muted-text: hsl(0, 0%, 70%);
+    --color-contrast: hsl(0, 0%, 95%);
+    --color-contrast-muted: hsl(0, 0%, 70%);
 }
 
 :root[data-theme='light'] {
@@ -20,8 +16,8 @@
     --color-details: hsl(0, 75%, 50%);
     --color-alert: hsl(0, 75%, 50%);
     --color-highlight: hsl(0, 75%, 50%);
-    --color-text: hsl(0, 0%, 5%);
-    --color-muted-text: hsl(0, 10%, 20%);
+    --color-contrast: hsl(0, 0%, 5%);
+    --color-contrast-muted: hsl(0, 10%, 20%);
 }
 
 :root[data-theme='sepia'] {
@@ -30,62 +26,110 @@
     --color-details: hsl(0, 75%, 50%);
     --color-alert: hsl(0, 75%, 50%);
     --color-highlight: hsl(0, 75%, 50%);
-    --color-text: hsl(0, 40%, 95%);
-    --color-muted-text: hsla(0, 10%, 70%);
+    --color-contrast: hsl(0, 40%, 95%);
+    --color-contrast-muted: hsla(0, 10%, 70%);
 }
 
+/* Document level adjustments */
+html {
+    font-size: 17px;
+    font-family: Arial, sans-serif;
+}
 h1 {
-    font-size: var(--text-4xl) /* 2.25rem = 36px */;
-    line-height: var(
-        --tw-leading,
-        var(--text-4xl--line-height) /* calc(2.25 / 2.25) ≈ 1.2 */
-    );
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-top: 0;
+}
+@media (max-width: 900px) {
+    html {
+        font-size: 15px;
+    }
+}
+@media (max-width: 400px) {
+    html {
+        font-size: 13px;
+    }
 }
 
+/* Modules will scale with document */
+.page-header {
+    font-size: 1.5rem;
+}
+.page-footer {
+    font-size: 0.75rem;
+}
+.sidebar {
+    font-size: 0.85rem;
+}
+
+/* Type will scale with modules */
+h1 {
+    font-size: 3em;
+}
 h2 {
-    font-size: var(--text-3xl) /* 1.875rem = 30px */;
-    line-height: var(
-        --tw-leading,
-        var(--text-3xl--line-height) /* calc(2.25 / 1.875) ≈ 1.2 */
-    );
-    margin-top: 1rem;
-    margin-bottom: 0.75rem;
+    font-size: 2.5em;
+}
+h3 {
+    font-size: 2em;
 }
 
-.muted {
-    color: var(--color-muted-text);
-}
-
-.header {
+/* layout */
+:root {
+    --max-content-width: 1000px;
     width: 100%;
-    max-width: var(--max-content-width);
-    padding-top: 2rem;
-    padding-bottom: 1rem;
-    margin: auto;
-}
 
+    background-color: var(--color-main);
+    color: var(--color-contrast);
+}
 .page {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
-
+.page-header {
+    width: 100%;
+    max-width: var(--max-content-width);
+    margin: auto;
+}
+.page-content {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.sidebar {
+    float: right;
+    width: 25%;
+}
+.page-footer {
+    color: var(--color-contrast-muted);
+    flex-shrink: 0;
+    clear: both;
+    padding-top: 2em;
+}
+h1 {
+    line-height: var(
+        --tw-leading,
+        var(--text-4xl--line-height) /* calc(2.25 / 2.25) ≈ 1.2 */
+    );
+}
+h2 {
+    line-height: var(
+        --tw-leading,
+        var(--text-3xl--line-height) /* calc(2.25 / 1.875) ≈ 1.2 */
+    );
+}
 .global-nav {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 2rem 3rem 2rem;
     z-index: 50;
     background-color: var(--color-main);
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 .global-nav > .inner {
     max-width: var(--max-content-width);
     width: 100%;
@@ -95,53 +139,11 @@ h2 {
     align-items: center;
     justify-content: space-between;
 }
-
-.page-content {
-    flex: 1 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.page-footer {
-    color: var(--color-muted-text);
-    flex-shrink: 0;
-    margin-top: auto;
-}
-.page-footer > .inner {
-    max-width: var(--max-content-width);
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 2rem 3rem 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .session {
-    padding: 5rem;
+    padding: 5rem 0;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-.session > .session-inner {
-    max-width: var(--max-content-width);
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.light {
-    background-color: var(--color-text);
-    color: var(--color-main);
-}
-
-.dark {
-    background-color: var(--color-main);
-    color: var(--color-text);
 }
