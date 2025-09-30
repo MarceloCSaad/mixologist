@@ -1,74 +1,54 @@
-import React, { useMemo } from 'react';
-import { PageSessionContext } from './PageSessionContext';
-import { PALETTE } from '../palette';
-
-const paddingMap = {
-    none: '0',
-    xxs: '1',
-    xs: '2',
-    sm: '4',
-    md: '8',
-    lg: '16',
-    xl: '40',
-    xxl: '80',
-};
+import React from 'react';
+import { THEME_MODES, type ThemeModes } from '../constants';
+import { PageSessionThemeContextProvider } from './PageSessionThemeContext';
+import { useSessionThemeModeContext } from './page-session-context';
 
 export interface PageSessionProps extends React.HTMLAttributes<HTMLDivElement> {
     children?: React.ReactNode;
-    innerPadding?: keyof typeof paddingMap | number;
-    contrastStyle?: 'default' | 'inverted';
+    removePadding?: boolean;
+    invertedTheme?: boolean;
 }
 
-export interface PageSessionContentProps {
-    children?: React.ReactNode;
-}
+export type PageSessionContentProps = Omit<PageSessionProps, 'themeMode'>;
 
-export const PageSessionContent = ({ children }: PageSessionContentProps) => {
-    const { innerPadding } = React.useContext(PageSessionContext);
-    let paddingClass = 'p-md';
-    if (typeof innerPadding === 'number') {
-        paddingClass = `p-${innerPadding}`;
-    } else if (innerPadding) {
-        paddingClass = `p-${paddingMap[innerPadding]}`;
-    }
+const getThemeModeClass = (themeMode: ThemeModes): string =>
+    ({
+        default: 'bg-[var(--color-main)] text-[var(--color-contrast)]',
+        inverted: 'bg-[var(--color-contrast)] text-[var(--color-main)]',
+    })[themeMode];
 
+const PageSessionContent = ({
+    children,
+    removePadding = false,
+    className = '',
+    ...rest
+}: PageSessionContentProps) => {
+    const themeMode = useSessionThemeModeContext();
     return (
         <div
-            className={`${paddingClass} mx-auto w-full max-w-[var(--max-content-width)]`}
+            className={`session ${className} ${getThemeModeClass(themeMode)} min-h-screen w-full`}
+            {...rest}
         >
-            {children}
+            <div
+                className={`p-md ${removePadding ? 'py-0' : ''} mx-auto w-full max-w-[var(--max-content-width)]`}
+            >
+                {children}
+            </div>
         </div>
     );
 };
 
 const PageSession = ({
-    className = '',
-    innerPadding = 'md',
     children,
-    contrastStyle = 'default',
+    invertedTheme = false,
     ...rest
 }: PageSessionProps) => {
-    const contextValue = useMemo(
-        () => ({
-            palette: PALETTE[contrastStyle] || PALETTE.default,
-            contrastStyle,
-            innerPadding,
-        }),
-        [contrastStyle, innerPadding],
-    );
-
+    const themeMode = invertedTheme ? THEME_MODES[1] : THEME_MODES[0];
     return (
-        <PageSessionContext.Provider value={contextValue}>
-            <div
-                className={`session bg-[var(${contextValue.palette.main})] text-[var(${contextValue.palette.contrast})] ${className}`}
-                {...rest}
-            >
-                <PageSessionContent>{children}</PageSessionContent>
-            </div>
-        </PageSessionContext.Provider>
+        <PageSessionThemeContextProvider themeMode={themeMode}>
+            <PageSessionContent {...rest}>{children}</PageSessionContent>
+        </PageSessionThemeContextProvider>
     );
 };
-
-PageSession.Content = PageSessionContent;
 
 export default PageSession;

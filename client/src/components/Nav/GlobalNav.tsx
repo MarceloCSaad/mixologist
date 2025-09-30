@@ -1,11 +1,12 @@
 import React from 'react';
 import Button from '../Button';
 import Searchbar from '../Searchbar';
+import { THEMES, type Themes } from '../constants';
 
 export type GlobalNavProps = React.HTMLAttributes<HTMLDivElement>;
 
 const GlobalNav = (props: GlobalNavProps) => {
-    const [theme, setTheme] = React.useState('light');
+    const [theme, setTheme] = React.useState<Themes>('black_and_white');
     React.useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
     }, [theme]);
@@ -21,18 +22,17 @@ const GlobalNav = (props: GlobalNavProps) => {
                     <Button
                         onClick={() =>
                             setTheme((theme) => {
-                                if (theme === 'light') {
-                                    return 'dark';
-                                } else if (theme === 'dark') {
-                                    return 'sepia';
-                                } else {
-                                    return 'light';
-                                }
+                                const currentIndex = THEMES.indexOf(theme);
+                                const nextIndex =
+                                    (currentIndex + 1) % THEMES.length;
+                                return THEMES[nextIndex];
                             })
                         }
                     >
                         {theme}
                     </Button>
+                    <Button variant="primary">Primary</Button>
+                    <Button variant="secondary">Secondary</Button>
                     <Searchbar variant="nav" />
                 </div>
             </div>

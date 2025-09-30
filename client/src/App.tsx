@@ -4,7 +4,7 @@ import Page from './components/Page/Page';
 
 const App = () => {
     return (
-        <Page title="Welcome to Mixologist" withNav>
+        <Page withNav>
             <Page.content>
                 <Page.session>
                     <CocktailPresentation
@@ -18,19 +18,7 @@ const App = () => {
                         tags={['cachaça', 'lime', 'sugar', 'refreshing']}
                     />
                 </Page.session>
-                <Page.session contrastStyle="inverted">
-                    <CocktailPresentation
-                        name={'Caipirinha'}
-                        description={
-                            'A refreshing Brazilian cocktail made with cachaça, sugar, and lime.'
-                        }
-                        imageUrl={
-                            'https://assets.epicurious.com/photos/579a2d8e437fcffe02f7230b/16:9/w_1920,c_limit/caipirinha-072816.jpg'
-                        }
-                        tags={['cachaça', 'lime', 'sugar', 'refreshing']}
-                    />
-                </Page.session>
-                <Page.session contrastStyle="inverted">
+                <Page.session invertedTheme>
                     <IngredientList
                         ingredients={[
                             { id: '1', name: 'Cachaça', amount: '50ml' },

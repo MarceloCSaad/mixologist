@@ -1,6 +1,4 @@
 import React from 'react';
-import { usePageSession } from './Page/PageSessionContext';
-import type { PaletteType } from './palette';
 
 export type SearchbarVariant = 'default' | 'nav';
 
@@ -10,12 +8,11 @@ export interface SearchbarProps
     onSearch?: (value: string) => void;
 }
 
-const getVariantClasses = (
-    palette: PaletteType,
-): Record<SearchbarVariant, string> => ({
-    default: `w-full p-5 max-w-md border border-[${palette.contrastMuted}] bg-[${palette.mainMuted}] rounded-full py-2 focus:outline-none focus:ring-1 focus:ring-[${palette.contrast}]`,
-    nav: `w-1/2 border-0 bg-[${palette.mainMuted}] rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[${palette.contrastMuted}]`,
-});
+const getVariantClass = (variant: SearchbarVariant): string =>
+    ({
+        default: `w-full p-5 max-w-md border rounded-full py-2 focus:outline-none focus:ring-1 focus:ring-[var(--color-contrast)]`,
+        nav: `w-1/2 border-0 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[var(--color-contrast-muted)]`,
+    })[variant];
 
 const Searchbar: React.FC<SearchbarProps> = ({
     variant = 'default',
@@ -23,8 +20,7 @@ const Searchbar: React.FC<SearchbarProps> = ({
     className = '',
     ...rest
 }) => {
-    const { palette } = usePageSession();
-    const variantClasses = getVariantClasses(palette);
+    const variantClass = getVariantClass(variant);
     const [value, setValue] = React.useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +45,8 @@ const Searchbar: React.FC<SearchbarProps> = ({
                 value={value}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
-                className={`${variantClasses[variant]} ${className}`.trim()}
+                className={`${className} ${variantClass} border-[var(--color-contrast-muted)] bg-[var(--color-main-muted)] text-[var(--color-contrast)]`.trim()}
+                aria-label="Search"
                 placeholder="Search..."
                 {...rest}
             />

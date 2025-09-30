@@ -1,33 +1,27 @@
 @import 'tailwindcss';
 
-:root[data-theme='dark'] {
-    --color-main: hsl(0, 0%, 5%);
-    --color-main-muted: hsl(0, 0%, 20%);
-    --color-details: hsl(0, 75%, 50%);
-    --color-alert: hsl(0, 75%, 50%);
-    --color-highlight: hsl(0, 75%, 50%);
-    --color-contrast: hsl(0, 0%, 95%);
-    --color-contrast-muted: hsl(0, 0%, 70%);
-}
-
-:root[data-theme='light'] {
-    --color-main: hsl(0, 0%, 95%);
+:root[data-theme='black_and_white'] {
+    --color-main: hsl(0, 0%, 93%);
+    --color-main-highlight: hsl(0, 0%, 100%);
     --color-main-muted: hsla(0, 0%, 80%);
     --color-details: hsl(0, 75%, 50%);
     --color-alert: hsl(0, 75%, 50%);
-    --color-highlight: hsl(0, 75%, 50%);
-    --color-contrast: hsl(0, 0%, 5%);
+    --color-warning: hsl(0, 75%, 50%);
+    --color-contrast: hsl(0, 2%, 11%);
+    --color-contrast-highlight: hsl(0, 0%, 0%);
     --color-contrast-muted: hsl(0, 10%, 20%);
 }
 
 :root[data-theme='sepia'] {
     --color-main: hsl(0, 28%, 33%);
+    --color-main-highlight: hsl(0, 25%, 50%);
     --color-main-muted: hsl(0, 25%, 18%);
     --color-details: hsl(0, 75%, 50%);
     --color-alert: hsl(0, 75%, 50%);
-    --color-highlight: hsl(0, 75%, 50%);
+    --color-warning: hsl(0, 75%, 50%);
     --color-contrast: hsl(0, 40%, 95%);
-    --color-contrast-muted: hsla(0, 10%, 70%);
+    --color-contrast-highlight: hsl(0, 40%, 100%);
+    --color-contrast-muted: hsla(0, 10%, 80%);
 }
 
 /* Document level adjustments */
@@ -105,18 +99,6 @@ h3 {
     flex-shrink: 0;
     clear: both;
     padding-top: 2em;
-}
-h1 {
-    line-height: var(
-        --tw-leading,
-        var(--text-4xl--line-height) /* calc(2.25 / 2.25) ≈ 1.2 */
-    );
-}
-h2 {
-    line-height: var(
-        --tw-leading,
-        var(--text-3xl--line-height) /* calc(2.25 / 1.875) ≈ 1.2 */
-    );
 }
 .global-nav {
     position: sticky;
