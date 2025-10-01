@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import type { ThemeModes } from './constants';
 import { useSessionThemeModeContext } from './Page/page-session-context';
 
@@ -15,11 +15,7 @@ const getThemeModeClass = (themeMode: ThemeModes): string =>
         inverted: `bg-[var(--color-contrast-muted)] text-[var(--color-main)] border-[var(--color-main)] hover:bg-[var(--color-main)] hover:text-[var(--color-contrast)]`,
     })[themeMode];
 
-const Bubble: React.FC<BubbleProps> = ({
-    label,
-    className = '',
-    withBorder = false,
-}) => {
+const Bubble = ({ label, className = '', withBorder = false }: BubbleProps) => {
     const themeMode = useSessionThemeModeContext();
     const tailwindClass = useMemo(() => {
         return [

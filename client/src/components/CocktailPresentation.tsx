@@ -1,4 +1,3 @@
-import React from 'react';
 import Bubble from './Bubble';
 
 interface CocktailPresentationProps {
@@ -8,12 +7,12 @@ interface CocktailPresentationProps {
     tags?: string[];
 }
 
-const CocktailPresentation: React.FC<CocktailPresentationProps> = ({
+const CocktailPresentation = ({
     name,
     description,
     imageUrl,
     tags,
-}) => {
+}: CocktailPresentationProps) => {
     return (
         <div className="flex w-full flex-row items-start gap-10">
             <div className="flex-shrink-0">

@@ -1,4 +1,3 @@
-import React from 'react';
 import { type Ingredient } from '../types/ingredient';
 import type { ThemeModes } from './constants';
 import { useSessionThemeModeContext } from './Page/page-session-context';
@@ -13,7 +12,7 @@ const getThemeModeClass = (themeMode: ThemeModes): string =>
         inverted: `border-t-[var(--color-contrast-highlight)] shadow-md`,
     })[themeMode];
 
-const IngredientCard: React.FC<IngredientCardProps> = ({ ingredient }) => {
+const IngredientCard = ({ ingredient }: IngredientCardProps) => {
     const themeMode = useSessionThemeModeContext();
     return (
         <div

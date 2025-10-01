@@ -73,6 +73,7 @@ with db_service.get_session() as session:
     print(f"cocktail.all_steps: {cocktail.all_steps}")
     print(f"cocktail.first_step: {cocktail.first_step}")
     print(f"cocktail.steps: {cocktail.steps}")
+    print(f"cocktail.cocktail_tag_associations: {cocktail.cocktail_tag_associations}")
     print(f"cocktail.tags: {cocktail.tags}")
     print(f"cocktail.last_step: {cocktail.last_step}")
     print("Recipe steps:")

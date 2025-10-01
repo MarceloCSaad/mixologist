@@ -24,13 +24,13 @@ const getLightVariantClass = (variant: ButtonVariant): string =>
         secondary: `bg-[var(--color-main-muted)] text-[var(--color-contrast)] border-[var(--color-main-muted)] border hover:bg-[var(--color-contrast-muted)] hover:text-[var(--color-main)] hover:border-[var(--color-contrast-muted)] active:bg-[var(--color-main-muted)] active:text-[var(--color-contrast-highlight)]`,
     })[variant];
 
-const Button: React.FC<ButtonProps> = ({
+const Button = ({
     variant = 'default',
     onClick,
     className = '',
     children,
     ...rest
-}) => {
+}: ButtonProps) => {
     const themeMode = useSessionThemeModeContext();
     const variantClass = useMemo(
         () =>

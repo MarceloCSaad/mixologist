@@ -14,12 +14,12 @@ const getVariantClass = (variant: SearchbarVariant): string =>
         nav: `w-1/2 border-0 rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[var(--color-contrast-muted)]`,
     })[variant];
 
-const Searchbar: React.FC<SearchbarProps> = ({
+const Searchbar = ({
     variant = 'default',
     onSearch,
     className = '',
     ...rest
-}) => {
+}: SearchbarProps) => {
     const variantClass = getVariantClass(variant);
     const [value, setValue] = React.useState('');
 

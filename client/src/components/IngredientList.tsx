@@ -1,4 +1,3 @@
-import React from 'react';
 import IngredientCard from './IngredientCard';
 import { type Ingredient } from '../types/ingredient';
 
@@ -6,7 +5,7 @@ interface IngredientListProps {
     ingredients: Ingredient[];
 }
 
-const IngredientList: React.FC<IngredientListProps> = ({ ingredients }) => {
+const IngredientList = ({ ingredients }: IngredientListProps) => {
     return (
         <section className="flex w-full flex-col items-center">
             <h2 className="mb-4">Ingredients</h2>
